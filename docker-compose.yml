@@ -1,0 +1,60 @@
+version: '3'
+services:
+  node:
+    build:
+      context: .
+      dockerfile: docker/frontend/Dockerfile
+    tty: true
+    volumes:
+      - ./nextjs:/frontend
+    environment:
+      - WATCHPACK_POLLING=true
+    command: sh -c "npm run dev"
+    ports:
+    - "3000:3000"
+
+  django:
+    build:
+      context: .
+      dockerfile: ./docker/backend/Dockerfile
+    volumes:
+      - ./django:/var/www/html/backend
+      - ./django/static:/var/www/html/backend/static
+      - ./django/media:/var/www/html/backend/media
+#    command: gunicorn config.wsgi:application --bind 0.0.0.0:8000
+    command: python3 -u manage.py runserver 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    tty: true
+    depends_on:
+      - db
+
+  # MySQL
+  db:
+    image: mysql:5.7
+    container_name: my-homepage-blog-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${ROOTPASS}
+      MYSQL_DATABASE: ${DATABASE}
+      MYSQL_USER: ${USERNAME}
+      MYSQL_PASSWORD: ${USERPASS}
+      TZ: 'Asia/Tokyo'
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+    - ./docker/mysql/data:/var/lib/mysql
+    - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    - ./docker/mysql/sql:/docker-entrypoint-initdb.d
+    ports:
+    - "3306:3306"
+
+  # phpMyAdmin
+  phpmyadmin:
+    container_name: test-phpmyadmin
+    image: phpmyadmin/phpmyadmin
+    environment:
+    - PMA_ARBITRARY=1
+    - PMA_HOSTS=my-homepage-blog-mysql
+    - PMA_USER=root
+    - PMA_PASSWORD=${ROOTPASS}
+    ports:
+    - "8080:80"

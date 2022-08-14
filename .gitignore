@@ -1,0 +1,45 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+.env
+
+# dependencies
+/nextjs/node_modules
+/nextjs/.pnp
+/nextjs/.pnp.js
+
+# testing
+/nextjs/coverage
+
+# next.js
+/nextjs/.next/
+/nextjs/out/
+
+# production
+/nextjs/build
+
+# misc
+/nextjs/.DS_Store
+/nextjs/*.pem
+
+# debug
+/nextjs/npm-debug.log*
+/nextjs/yarn-debug.log*
+/nextjs/yarn-error.log*
+/nextjs/.pnpm-debug.log*
+
+# local env files
+/nextjs/.env*.local
+
+# vercel
+/nextjs/.vercel
+
+# typescript
+/nextjs/*.tsbuildinfo
+/nextjs/next-env.d.ts
+
+#### Django
+/django/.env
+
+#### docker
+/docker/mysql/data
+/docker/mysql/sql

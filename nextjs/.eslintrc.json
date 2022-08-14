@@ -1,0 +1,32 @@
+{
+ "env": {
+   "browser": true,
+   "es2021": true
+ },
+ "extends": [
+   "plugin:react/recommended",
+   "standard",
+   "prettier" // eslintとprettierの衝突回避
+ ],
+ "parser": "@typescript-eslint/parser",
+ "parserOptions": {
+   "ecmaFeatures": {
+     "jsx": true
+   },
+   "ecmaVersion": "latest",
+   "sourceType": "module"
+ },
+ "plugins": ["react", "@typescript-eslint"],
+ "rules": {
+   "react/react-in-jsx-scope": "off", // v17からReactをimport不要になった
+   // importをアルファベット順にする
+   "import/order": [
+     "error",
+     {
+       "alphabetize": {
+         "order": "asc"
+       }
+     }
+   ]
+ }
+}
