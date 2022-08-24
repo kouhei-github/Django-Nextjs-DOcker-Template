@@ -36,6 +36,8 @@
 # typescript
 /nextjs/*.tsbuildinfo
 /nextjs/next-env.d.ts
+/nextjs/config
+
 
 #### Django
 /django/.env
